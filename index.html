@@ -802,22 +802,27 @@
           </div>
 
           <!-- Sucesso -->
-          <div id="successBox" class="hidden" x-transition:enter="transition duration-500"
-            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-            class="rounded-3xl border border-green-500/20 bg-green-500/5 p-12 sm:p-16 text-center shadow-2xl shadow-black/30">
+          <div id="successBox"
+            class="hidden rounded-3xl border border-green-500/20 bg-green-500/5 p-12 sm:p-16 text-center shadow-2xl shadow-black/30 w-full transition-all duration-500 opacity-0 scale-95">
+
             <div
               class="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6 animate-scale-up">
-              🎉</div>
-            <h3 class="font-display font-bold text-2xl text-white mb-3">Cadastro realizado!</h3>
+              🎉
+            </div>
+
+            <h3 class="font-display font-bold text-2xl text-white mb-3">
+              Cadastro realizado!
+            </h3>
+
             <p class="text-ink-400 text-[1rem] leading-relaxed max-w-md mx-auto">
               Nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva
               para você!
             </p>
-          </div>
-        </div>
 
+          </div>
+
+        </div>
       </div>
-    </div>
   </section>
 
   <!-- FOOTER -->
@@ -933,12 +938,17 @@
         console.log("erro ignorado (no-cors)");
       }
 
-      // 🔥 sempre executa (independente de erro)
       setTimeout(() => {
         btn.textContent = "Enviado!";
 
         document.getElementById("formBox").classList.add("hidden");
-        document.getElementById("successBox").classList.remove("hidden");
+        const success = document.getElementById("successBox");
+
+        success.classList.remove("hidden");
+
+        setTimeout(() => {
+          success.classList.remove("opacity-0", "scale-95");
+        }, 50);
       }, 800);
     });
   </script>
