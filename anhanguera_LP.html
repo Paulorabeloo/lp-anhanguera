@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR" x-data="app()" x-init="init()">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Anhanguera. Graduação e Pós-Graduação com condições exclusivas para associados.">
+  <title>Educação que transforma Vidas!</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff4ef', 100: '#ffe4d5', 200: '#ffc4a3', 300: '#ff9966',
+              400: '#ff7033', 500: '#f15a22', 600: '#d94410', 700: '#b5330c',
+              800: '#922b0f', 900: '#772710',
+            },
+            ink: {
+              50: '#f7f7f6', 100: '#eeede9', 200: '#d8d6cf', 300: '#b8b4aa',
+              400: '#938e82', 500: '#776f62', 600: '#5e5750', 700: '#4a4540',
+              800: '#3b3833', 900: '#1c1a17', 950: '#0d0c0a',
+            }
+          },
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          backgroundImage: {
+            'orange-radial': 'radial-gradient(ellipse 80% 60% at 50% -10%, #f15a22 0%, transparent 70%)',
+          },
+          keyframes: {
+            'fade-up': { '0%': { opacity: '0', transform: 'translateY(32px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            'scale-up': { '0%': { opacity: '0', transform: 'scale(0.94)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+            'float': { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            'pulse-ring': { '0%': { transform: 'scale(1)', opacity: '0.6' }, '100%': { transform: 'scale(1.5)', opacity: '0' } },
+          },
+          animation: {
+            'fade-up': 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) both',
+            'scale-up': 'scale-up 0.6s cubic-bezier(0.22,1,0.36,1) both',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-ring': 'pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet">
+
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .noise::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-d1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-d2 {
+      transition-delay: 0.2s;
+    }
+
+    .hero-mesh {
+      background:
+        radial-gradient(ellipse 100% 80% at 60% 110%, rgba(241, 90, 34, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 100% 0%, rgba(241, 90, 34, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 0% 50%, rgba(15, 10, 8, 0.8) 0%, transparent 60%),
+        linear-gradient(160deg, #0d0c0a 0%, #1c1a17 40%, #0d0c0a 100%);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #ff9966 0%, #f15a22 50%, #d94410 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .inp {
+      background: rgba(247, 247, 246, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      transition: all 0.25s ease;
+      outline: none;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .inp::placeholder {
+      color: rgba(255, 255, 255, 0.28);
+    }
+
+    .inp:focus {
+      border-color: #f15a22;
+      background: rgba(241, 90, 34, 0.07);
+      box-shadow: 0 0 0 3px rgba(241, 90, 34, 0.18);
+    }
+
+    .inp.valid {
+      border-color: #22c55e;
+    }
+
+    .inp.invalid {
+      border-color: #ef4444;
+    }
+
+    .inp option {
+      background: #1c1a17;
+      color: white;
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-shine:hover::before {
+      left: 140%;
+    }
+
+    .card-lift {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    }
+
+    .card-lift:hover {
+      transform: translateY(-6px);
+    }
+
+    .link-underline {
+      position: relative;
+    }
+
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: #f15a22;
+      transition: width 0.35s ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0d0c0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3b3833;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f15a22;
+    }
+
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+
+<body class="bg-ink-950 text-ink-100 font-body" x-cloak>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 inset-x-0 z-50 transition-all duration-500"
+    :class="scrolled ? 'bg-ink-950/90 backdrop-blur-2xl border-b border-white/[0.06] py-3' : 'py-5'">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="anhanguera-logo-branco-horizontal.png" alt="Logo Anhanguera" class="h-8 w-auto object-contain" />
+      </div>
+
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#beneficios"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Benefícios</a>
+        <a href="#modalidades"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Graduação e
+          Pós</a>
+        <a href="#depoimentos"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Depoimentos</a>
+      </div>
+
+      <a href="#formulario"
+        class="btn-shine flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white text-[0.83rem] font-semibold px-5 py-2.5 rounded-full transition-all duration-300 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5">
+        <span>Quero Mudar meu Futuro</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-mesh noise relative min-h-screen overflow-hidden pt-24 pb-20">
+    <div
+      class="absolute right-[-8%] top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-brand-500/10 pointer-events-none">
+    </div>
+    <div
+      class="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-brand-500/15 pointer-events-none">
+    </div>
+    <div
+      class="absolute right-[4%] top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-brand-500/20 pointer-events-none">
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10 flex items-center min-h-[80vh]">
+      <div class="grid lg:grid-cols-2 gap-16 place-items-center w-full">
+
+        <div class="max-w-[640px] mx-auto lg:mx-0 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2.5 glass rounded-full px-4 py-2 mb-10">
+            <div class="relative flex h-2 w-2">
+              <span
+                class="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-brand-500"></span>
+            </div>
+            <span class="text-[0.75rem] font-semibold text-white/80 uppercase tracking-widest">Parceria Exclusiva</span>
+          </div>
+
+          <h1 class="font-display font-bold leading-[1.05] mb-6">
+            <span class="block text-[clamp(3.2rem,7vw,5.8rem)] text-white">Educação que</span>
+            <span class="block text-[clamp(3.2rem,7vw,5.8rem)] text-gradient">transforma</span>
+            <span class="block text-[clamp(3.2rem,7vw,5.8rem)] text-white">carreiras.</span>
+          </h1>
+
+          <p class="text-[1.05rem] text-ink-400 leading-relaxed max-w-[480px] mb-10">
+            Parceiros têm acesso a condições únicas em
+            <span class="text-white font-medium">graduação e pós-graduação</span>
+            reconhecidas pelo MEC com mensalidades que cabem no seu orçamento.
+          </p>
+
+          <div class="flex gap-4 mb-12">
+            <a href="#formulario"
+              class="btn-shine group flex items-center gap-3 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:-translate-y-0.5">
+              Garantir desconto
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hidden lg:block animate-float">
+          <div class="relative w-[340px] xl:w-[400px]">
+            <div class="rounded-3xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-white/10">
+              <img src="fotoIA.png" alt="Estudante" class="w-full h-[480px] object-cover object-top">
+            </div>
+            <div class="absolute -left-14 bottom-16 glass rounded-2xl p-4 shadow-2xl animate-float"
+              style="animation-delay:1s">
+              <div class="text-2xl font-display font-bold text-white">100%</div>
+              <div class="text-[0.72rem] text-white/60 mt-0.5">Aprovação no MEC</div>
+            </div>
+            <div class="absolute -right-4 top-10 glass rounded-xl px-4 py-3 shadow-xl">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                <span class="text-[0.75rem] text-white/80 font-medium">Vagas disponíveis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="max-w-7xl mx-auto px-6 mt-[-40px] mb-12 relative z-10">
+      <div class="flex justify-center gap-12">
+        <div class="text-center">
+          <div class="font-display font-bold text-3xl text-white"><span class="counter" data-target="98000">0</span>+
+          </div>
+          <div class="text-xs text-ink-500">Alunos matriculados</div>
+        </div>
+        <div class="w-px h-8 bg-white/10"></div>
+        <div class="text-center">
+          <div class="font-display font-bold text-3xl text-white"><span class="counter" data-target="200">0</span>+
+          </div>
+          <div class="text-xs text-ink-500">Cursos disponíveis</div>
+        </div>
+        <div class="w-px h-8 bg-white/10"></div>
+        <div class="text-center">
+          <div class="font-display font-bold text-3xl text-brand-400">R$<span class="counter" data-target="129">0</span>
+          </div>
+          <div class="text-xs text-ink-500">A partir de / mês</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      <span class="text-[0.65rem] tracking-[0.2em] uppercase text-white">Scroll</span>
+      <div class="w-px h-10 bg-gradient-to-b from-white to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios" class="py-32 bg-ink-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-20">
+        <div
+          class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
+          <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Benefícios exclusivos da
+            parceria</span>
+        </div>
+        <h2 class="font-display font-bold text-[clamp(2rem,5vw,3.8rem)] text-white leading-tight mb-4">
+          O caminho mais rápido para<br><span class="text-gradient">conquistar seu diploma</span>
+        </h2>
+        <p class="text-ink-400 text-[1rem] max-w-2xl mx-auto leading-relaxed">
+          Uma parceria estratégica que reduz custos, simplifica o acesso e coloca você dentro do ensino superior com
+          muito mais facilidade, sem complicação e sem perder qualidade.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+        <div class="text-center lg:text-left space-y-6">
+          <h3 class="text-white text-2xl font-semibold">O que isso significa na prática para você</h3>
+          <p class="text-ink-400 leading-relaxed">Não é só sobre estudar, é sobre conseguir entrar no ensino superior de
+            forma viável, mesmo com rotina corrida e orçamento limitado.</p>
+          <div class="space-y-3 text-ink-300 text-sm leading-relaxed">
+            <p>✔ Pague menos e comece sua graduação/pós sem pesar no bolso</p>
+            <p>✔ Tenha um diploma reconhecido e valorizado no mercado</p>
+            <p>✔ Acesse condições exclusivas que não estão abertas ao público geral</p>
+            <p>✔ Estude no seu ritmo com flexibilidade total (EAD ou semipresencial)</p>
+            <p>✔ Conte com suporte durante toda a sua jornada acadêmica</p>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-6 h-36 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
+            <div class="flex items-center gap-5 relative w-full">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl shadow-inner">
+                💰</div>
+              <div class="flex flex-col justify-center">
+                <div class="font-semibold text-white text-[0.95rem] leading-snug">Entrada facilitada no ensino superior
+                </div>
+                <div class="text-white/50 text-[0.82rem] leading-relaxed mt-1">Comece sua graduação/pós sem pesar no
+                  orçamento</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-6 h-36 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
+            <div class="flex items-center gap-5 relative w-full">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl">
+                🎓</div>
+              <div class="flex flex-col justify-center">
+                <div class="font-semibold text-white text-[0.95rem] leading-snug">Diploma reconhecido e valorizado</div>
+                <div class="text-white/50 text-[0.82rem] leading-relaxed mt-1">Válido em todo o território nacional pelo
+                  MEC</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-6 h-36 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
+            <div class="flex items-center gap-5 relative w-full">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl">
+                ⚡</div>
+              <div class="flex flex-col justify-center">
+                <div class="font-semibold text-white text-[0.95rem] leading-snug">Processo rápido e sem burocracia</div>
+                <div class="text-white/50 text-[0.82rem] leading-relaxed mt-1">Inscrição simples, 100% online e sem
+                  complicação</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-6 h-36 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
+            <div class="flex items-center gap-5 relative w-full">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl">
+                📚</div>
+              <div class="flex flex-col justify-center">
+                <div class="font-semibold text-white text-[0.95rem] leading-snug">Estudo flexível para sua rotina</div>
+                <div class="text-white/50 text-[0.82rem] leading-relaxed mt-1">EAD ou semipresencial no seu ritmo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALIDADES -->
+  <section id="modalidades" class="py-24 bg-ink-900/30">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-14">
+        <div
+          class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
+          <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Escolha sua jornada</span>
+        </div>
+        <h2 class="font-display font-bold text-[clamp(2rem,5vw,3.4rem)] text-white leading-tight">Dê o próximo passo na
+          sua carreira!</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div
+          class="reveal reveal-d1 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
+          onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
+          <div class="absolute inset-0">
+            <img src="Whisk_60dd74de2ac276cb13c4914e24ac6817dr.jpeg" alt=""
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+          </div>
+          <div class="relative z-10 p-8 flex flex-col min-h-[360px] justify-end">
+            <div class="mb-auto">
+              <span
+                class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">A
+                partir de R$129/mês</span>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-3xl text-white mb-2">Graduação</h3>
+              <p class="text-ink-400 text-sm mb-6">Mais de 100 cursos de graduação com condições exclusivas para
+                associados.</p>
+              <div
+                class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
+                <span>Garantir desconto</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="reveal reveal-d2 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
+          onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
+          <div class="absolute inset-0">
+            <img src="Whisk_0364561b33dbee5942a4adb4a2fe94afdr.jpeg" alt=""
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+          </div>
+          <div class="relative z-10 p-8 flex flex-col min-h-[360px] justify-end">
+            <div class="mb-auto">
+              <span
+                class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Condição
+                Especial</span>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-3xl text-white mb-2">Pós-Graduação</h3>
+              <p class="text-ink-400 text-sm mb-6">Especializações e MBAs com reconhecimento nacional e professores de
+                excelência.</p>
+              <div
+                class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
+                <span>Garantir desconto</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos">
+    <div
+      style="font-family:'DM Sans',sans-serif;background:#f15a22;padding:80px 24px;position:relative;overflow:hidden;">
+      <div
+        style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px);pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;left:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,255,255,0.08);pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);">
+      </div>
+
+      <div style="max-width:1000px;margin:0 auto;position:relative;z-index:1;">
+        <div style="text-align:center;margin-bottom:52px;">
+          <div
+            style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:100px;padding:6px 18px;margin-bottom:20px;">
+            <span
+              style="font-size:11px;font-weight:700;color:white;letter-spacing:0.16em;text-transform:uppercase;">Quem já
+              passou por aqui</span>
+          </div>
+          <h2 class="font-display font-extrabold text-[clamp(2rem,5vw,3rem)] text-white leading-tight tracking-normal">
+            Histórias de quem<br>transformou a carreira
+          </h2>
+          <p style="color:rgba(255,255,255,0.7);font-size:0.97rem;margin:0 auto;max-width:420px;line-height:1.6;">
+            Alunos que usaram a parceria e mudaram de vida através da educação.
+          </p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+            <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Achei que não
+              conseguiria pagar uma faculdade. Com a parceria, a mensalidade ficou dentro do meu orçamento e hoje estou
+              no 3º semestre de Administração."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                MS</div>
+              <div>
+                <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Marcos Silva</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Administração · São Paulo,
+                  SP</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="background:white;border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+            <span style="color:#f15a22;font-size:13px;letter-spacing:2px;">★★★★★</span>
+            <p style="color:#3b3833;font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"O processo foi simples demais.
+              Preenchi o formulário, a equipe me ligou no dia seguinte e em menos de uma semana já estava matriculada na
+              pós."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(0,0,0,0.07);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(241,90,34,0.12);border:1px solid rgba(241,90,34,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#d94410;flex-shrink:0;">
+                AC</div>
+              <div>
+                <div style="font-size:0.87rem;font-weight:600;color:#1c1a17;line-height:1.2;">Ana Carolina</div>
+                <div style="font-size:0.73rem;color:#776f62;margin-top:2px;">Pós em Gestão de RH · Americana, SP</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+            <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Já tentei
+              outros programas de bolsa antes e eram cheios de pegadinhas. Aqui foi diferente, o desconto veio de
+              verdade na mensalidade, sem surpresa."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                RF</div>
+              <div>
+                <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Ricardo Ferreira</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Engenharia de Software ·
+                  Manaus, AM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="max-width:676px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+            <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Estudar EAD com
+              a qualidade da Anhanguera e ainda pagar menos por ser associado foi a melhor decisão que tomei este ano."
+            </p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                JP</div>
+              <div>
+                <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Juliana Pereira</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Ciências Contábeis ·
+                  Maravilha, SC</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+            <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Trabalho
+              durante o dia e precisava de flexibilidade. O semipresencial me permitiu conciliar tudo. O suporte durante
+              a matrícula foi excelente."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                LO</div>
+              <div>
+                <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Lucas Oliveira</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Pedagogia Semipresencial ·
+                  Santa Bárbara d'Oeste, SP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.15),transparent);">
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="formulario" class="py-32 bg-ink-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-start">
+
+        <div class="reveal lg:sticky lg:top-32">
+          <div
+            class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-7">
+            <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Cadastro gratuito</span>
+          </div>
+          <h2 class="font-display font-bold text-[clamp(2.2rem,5vw,3.8rem)] text-white leading-tight mb-5">
+            Garanta seu<br><span class="text-gradient">desconto agora!</span>
+          </h2>
+          <p class="text-ink-400 text-[1rem] leading-relaxed mb-12 max-w-md">
+            Preencha o cadastro e nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma
+            proposta exclusiva para você. Aproveite seu desconto e dê o próximo passo na sua carreira!
+          </p>
+        </div>
+
+        <div class="reveal reveal-d1">
+          <!-- Formulário -->
+          <div class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40"
+            x-show="!formSent">
+            <div class="px-8 pt-8 pb-6 border-b border-white/[0.07]">
+              <h3 class="font-display font-bold text-[1.2rem] text-white">Garantir desconto</h3>
+              <p class="text-ink-500 text-[0.82rem] mt-1">Todos os campos são obrigatórios. Dados 100% seguros.</p>
+            </div>
+
+            <div class="p-8 space-y-5">
+
+              <!-- Nome -->
+              <div>
+                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Nome
+                  Completo</label>
+                <input id="f_nome" type="text" class="inp" placeholder="Seu nome completo">
+              </div>
+
+              <!-- WhatsApp e E-mail -->
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">WhatsApp</label>
+                  <input id="f_whats" type="text" class="inp" placeholder="(11) 99999-9999" maxlength="15"
+                    oninput="maskPhone(this)">
+                </div>
+                <div>
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">E-mail</label>
+                  <input id="f_email" type="email" class="inp" placeholder="seu@email.com">
+                </div>
+              </div>
+
+              <!-- Ensino Médio -->
+              <div>
+                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Concluiu
+                  o Ensino Médio?</label>
+                <select id="f_ensinomedio" class="inp">
+                  <option value="">Selecione</option>
+                  <option value="sim">Sim</option>
+                  <option value="nao">Não</option>
+                </select>
+              </div>
+
+              <!-- Curso e Modalidade -->
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Curso
+                    Pretendido</label>
+                  <input id="f_curso" type="text" class="inp" placeholder="Nome do curso">
+                </div>
+                <div>
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Modalidade</label>
+                  <select id="f_modalidade" class="inp">
+                    <option value="">Selecione</option>
+                    <option value="EAD">EAD</option>
+                    <option value="Semipresencial">Semipresencial</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Botão -->
+              <div class="pt-2">
+                <button id="btnEnviar" type="button"
+                  class="btn-shine w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:-translate-y-0.5 text-[0.95rem]">
+                  Garantir desconto
+                </button>
+                <p class="text-center text-ink-600 text-[0.72rem] mt-3 leading-relaxed">
+                  Ao enviar você concorda com nossa
+                  <a href="#" class="text-ink-400 hover:text-brand-400 transition-colors">Política de Privacidade</a>.
+                  Dados protegidos e nunca compartilhados.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Sucesso -->
+          <div x-show="formSent" x-transition:enter="transition duration-500"
+            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+            class="rounded-3xl border border-green-500/20 bg-green-500/5 p-16 text-center shadow-2xl shadow-black/30">
+            <div
+              class="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6 animate-scale-up">
+              🎉</div>
+            <h3 class="font-display font-bold text-2xl text-white mb-3">Cadastro realizado!</h3>
+            <p class="text-ink-400 text-[1rem] leading-relaxed max-w-md mx-auto">
+              Nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva
+              para você!
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/[0.06] py-10 bg-ink-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
+        <img src="anhanguera-logo-branco-horizontal.png" alt="Logo Anhanguera"
+          class="h-6 w-auto object-contain opacity-60" />
+        <p class="text-ink-600 text-[0.75rem]">© 2025 Anhanguera. Todos os direitos reservados.</p>
+        <div class="flex gap-6">
+          <a href="privacidade_termos.html#privacidade"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Privacidade</a>
+          <a href="privacidade_termos.html#termos"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Termos</a>
+          <a href="https://wa.me/message/I6YV7RH5DBKMK1"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Contato</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function maskPhone(el) {
+      let v = el.value.replace(/\D/g, ''), out = '';
+      for (let i = 0; i < v.length && i < 11; i++) {
+        if (i === 0) out += '(';
+        if (i === 2) out += ') ';
+        if (i === 7) out += '-';
+        out += v[i];
+      }
+      el.value = out;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll(".counter");
+      const animate = (el) => {
+        const target = +el.dataset.target;
+        let current = 0;
+        const steps = 1200 / 16;
+        const increment = target / steps;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) { el.innerText = target.toLocaleString("pt-BR"); clearInterval(timer); }
+          else { el.innerText = Math.floor(current).toLocaleString("pt-BR"); }
+        }, 16);
+      };
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { animate(e.target); obs.unobserve(e.target); } });
+      }, { threshold: 0.6 });
+      counters.forEach(el => obs.observe(el));
+    });
+
+    // Envio para Google Sheets
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbx_bxvPpxvDeMZ_3ylAJzrre3k8hUBSmE2hSIa-JNSbw1MTM7bWMenfKO8q1CbmvmiSGg/exec";
+
+    document.getElementById("btnEnviar").addEventListener("click", async () => {
+      const nome = document.getElementById("f_nome").value.trim();
+      const whatsapp = document.getElementById("f_whats").value.trim();
+      const email = document.getElementById("f_email").value.trim();
+      const ensinoMedio = document.getElementById("f_ensinomedio").value;
+      const curso = document.getElementById("f_curso").value.trim();
+      const modalidade = document.getElementById("f_modalidade").value;
+
+      if (!nome || !whatsapp || !email || !ensinoMedio || !curso || !modalidade) {
+        alert("Por favor, preencha todos os campos antes de enviar.");
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Por favor, informe um e-mail válido.");
+        return;
+      }
+
+      const btn = document.getElementById("btnEnviar");
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ nome, whatsapp, email, ensinoMedio, cursoPretendido: curso, modalidade })
+        });
+
+        document.querySelector('[x-data]').__x.$data.formSent = true;
+
+      } catch (error) {
+        console.error("Erro ao enviar:", error);
+        alert("Erro ao enviar. Tente novamente.");
+        btn.disabled = false;
+        btn.textContent = "Garantir desconto";
+      }
+    });
+  </script>
+
+  <script>
+    function app() {
+      return {
+        scrolled: false,
+        formSent: false,
+
+        init() {
+          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
+
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>
