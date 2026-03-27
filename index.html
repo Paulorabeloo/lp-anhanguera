@@ -46,19 +46,31 @@
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet">
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <style>
-    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
 
     .glass {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.14);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .noise::after {
@@ -74,17 +86,27 @@
     .reveal {
       opacity: 0;
       transform: translateY(28px);
-      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-d1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-d2 {
+      transition-delay: 0.2s;
+    }
 
     .hero-mesh {
       background:
-        radial-gradient(ellipse 100% 80% at 60% 110%, rgba(241,90,34,0.55) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 50% at 100% 0%, rgba(241,90,34,0.2) 0%, transparent 50%),
-        radial-gradient(ellipse 80% 60% at 0% 50%, rgba(15,10,8,0.8) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 80% at 60% 110%, rgba(241, 90, 34, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 100% 0%, rgba(241, 90, 34, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 0% 50%, rgba(15, 10, 8, 0.8) 0%, transparent 60%),
         linear-gradient(160deg, #0d0c0a 0%, #1c1a17 40%, #0d0c0a 100%);
     }
 
@@ -96,8 +118,8 @@
     }
 
     .inp {
-      background: rgba(247,247,246,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(247, 247, 246, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: white;
       border-radius: 10px;
       padding: 13px 16px;
@@ -109,39 +131,97 @@
       appearance: none;
       -webkit-appearance: none;
     }
-    .inp::placeholder { color: rgba(255,255,255,0.28); }
-    .inp:focus { border-color: #f15a22; background: rgba(241,90,34,0.07); box-shadow: 0 0 0 3px rgba(241,90,34,0.18); }
-    .inp.valid { border-color: #22c55e; }
-    .inp.invalid { border-color: #ef4444; }
-    .inp option { background: #1c1a17; color: white; }
 
-    .btn-shine { position: relative; overflow: hidden; }
+    .inp::placeholder {
+      color: rgba(255, 255, 255, 0.28);
+    }
+
+    .inp:focus {
+      border-color: #f15a22;
+      background: rgba(241, 90, 34, 0.07);
+      box-shadow: 0 0 0 3px rgba(241, 90, 34, 0.18);
+    }
+
+    .inp.valid {
+      border-color: #22c55e;
+    }
+
+    .inp.invalid {
+      border-color: #ef4444;
+    }
+
+    .inp option {
+      background: #1c1a17;
+      color: white;
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+    }
+
     .btn-shine::before {
       content: '';
       position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
       transition: left 0.5s ease;
     }
-    .btn-shine:hover::before { left: 140%; }
 
-    .card-lift { transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease; }
-    .card-lift:hover { transform: translateY(-6px); }
-
-    .link-underline { position: relative; }
-    .link-underline::after {
-      content: ''; position: absolute; bottom: -2px; left: 0;
-      width: 0; height: 1.5px; background: #f15a22; transition: width 0.35s ease;
+    .btn-shine:hover::before {
+      left: 140%;
     }
-    .link-underline:hover::after { width: 100%; }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d0c0a; }
-    ::-webkit-scrollbar-thumb { background: #3b3833; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #f15a22; }
+    .card-lift {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    }
 
-    .counter { font-variant-numeric: tabular-nums; }
+    .card-lift:hover {
+      transform: translateY(-6px);
+    }
+
+    .link-underline {
+      position: relative;
+    }
+
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: #f15a22;
+      transition: width 0.35s ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0d0c0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3b3833;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f15a22;
+    }
+
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
 
     /* Depoimentos responsivos */
     .depo-grid-3 {
@@ -150,6 +230,7 @@
       gap: 14px;
       margin-bottom: 14px;
     }
+
     .depo-grid-2 {
       max-width: 676px;
       margin: 0 auto;
@@ -157,17 +238,32 @@
       grid-template-columns: 1fr 1fr;
       gap: 14px;
     }
+
     @media (max-width: 768px) {
-      .depo-grid-3 { grid-template-columns: 1fr; }
-      .depo-grid-2 { grid-template-columns: 1fr; max-width: 100%; }
+      .depo-grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .depo-grid-2 {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
     }
 
     /* Nav CTA mobile */
     @media (max-width: 480px) {
-      .nav-cta-full { display: none; }
-      .nav-cta-short { display: inline !important; }
+      .nav-cta-full {
+        display: none;
+      }
+
+      .nav-cta-short {
+        display: inline !important;
+      }
     }
-    .nav-cta-short { display: none; }
+
+    .nav-cta-short {
+      display: none;
+    }
   </style>
 </head>
 
@@ -180,9 +276,13 @@
       <img src="anhanguera-logo-branco-horizontal.png" alt="Logo Anhanguera" class="h-7 sm:h-8 w-auto object-contain" />
 
       <div class="hidden md:flex items-center gap-8">
-        <a href="#beneficios" class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Benefícios</a>
-        <a href="#modalidades" class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Graduação e Pós</a>
-        <a href="#depoimentos" class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Depoimentos</a>
+        <a href="#beneficios"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Benefícios</a>
+        <a href="#modalidades"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Graduação e
+          Pós</a>
+        <a href="#depoimentos"
+          class="text-[0.83rem] text-ink-400 hover:text-white transition-all duration-300 link-underline">Depoimentos</a>
       </div>
 
       <a href="#formulario"
@@ -198,9 +298,15 @@
 
   <!-- HERO -->
   <section class="hero-mesh noise relative min-h-screen overflow-hidden pt-24 pb-20">
-    <div class="absolute right-[-8%] top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-brand-500/10 pointer-events-none"></div>
-    <div class="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-brand-500/15 pointer-events-none"></div>
-    <div class="absolute right-[4%] top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-brand-500/20 pointer-events-none"></div>
+    <div
+      class="absolute right-[-8%] top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-brand-500/10 pointer-events-none">
+    </div>
+    <div
+      class="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-brand-500/15 pointer-events-none">
+    </div>
+    <div
+      class="absolute right-[4%] top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-brand-500/20 pointer-events-none">
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 flex items-center min-h-[80vh]">
       <div class="grid lg:grid-cols-2 gap-16 place-items-center w-full">
@@ -208,10 +314,12 @@
         <div class="max-w-[640px] mx-auto lg:mx-0 text-center lg:text-left">
           <div class="inline-flex items-center gap-2.5 glass rounded-full px-4 py-2 mb-8 sm:mb-10">
             <div class="relative flex h-2 w-2">
-              <span class="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+              <span
+                class="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full bg-brand-500"></span>
             </div>
-            <span class="text-[0.7rem] sm:text-[0.75rem] font-semibold text-white/80 uppercase tracking-widest">Parceria Exclusiva</span>
+            <span class="text-[0.7rem] sm:text-[0.75rem] font-semibold text-white/80 uppercase tracking-widest">Parceria
+              Exclusiva</span>
           </div>
 
           <h1 class="font-display font-bold leading-[1.05] mb-6">
@@ -230,7 +338,8 @@
             <a href="#formulario"
               class="btn-shine group flex items-center gap-3 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-6 sm:px-8 py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:-translate-y-0.5">
               Garantir desconto
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
@@ -242,7 +351,8 @@
             <div class="rounded-3xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-white/10">
               <img src="fotoIA.png" alt="Estudante" class="w-full h-[480px] object-cover object-top">
             </div>
-            <div class="absolute -left-14 bottom-16 glass rounded-2xl p-4 shadow-2xl animate-float" style="animation-delay:1s">
+            <div class="absolute -left-14 bottom-16 glass rounded-2xl p-4 shadow-2xl animate-float"
+              style="animation-delay:1s">
               <div class="text-2xl font-display font-bold text-white">100%</div>
               <div class="text-[0.72rem] text-white/60 mt-0.5">Aprovação no MEC</div>
             </div>
@@ -262,17 +372,20 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-[-20px] sm:mt-[-40px] mb-12 relative z-10">
       <div class="flex flex-wrap justify-center gap-6 sm:gap-12">
         <div class="text-center">
-          <div class="font-display font-bold text-2xl sm:text-3xl text-white"><span class="counter" data-target="98000">0</span>+</div>
+          <div class="font-display font-bold text-2xl sm:text-3xl text-white"><span class="counter"
+              data-target="98000">0</span>+</div>
           <div class="text-xs text-ink-500">Alunos matriculados</div>
         </div>
         <div class="hidden sm:block w-px h-8 bg-white/10 self-center"></div>
         <div class="text-center">
-          <div class="font-display font-bold text-2xl sm:text-3xl text-white"><span class="counter" data-target="200">0</span>+</div>
+          <div class="font-display font-bold text-2xl sm:text-3xl text-white"><span class="counter"
+              data-target="200">0</span>+</div>
           <div class="text-xs text-ink-500">Cursos disponíveis</div>
         </div>
         <div class="hidden sm:block w-px h-8 bg-white/10 self-center"></div>
         <div class="text-center">
-          <div class="font-display font-bold text-2xl sm:text-3xl text-brand-400">R$<span class="counter" data-target="129">0</span></div>
+          <div class="font-display font-bold text-2xl sm:text-3xl text-brand-400">R$<span class="counter"
+              data-target="129">0</span></div>
           <div class="text-xs text-ink-500">A partir de / mês</div>
         </div>
       </div>
@@ -288,21 +401,25 @@
   <section id="beneficios" class="py-20 sm:py-32 bg-ink-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="reveal text-center mb-14 sm:mb-20">
-        <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
-          <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Benefícios exclusivos da parceria</span>
+        <div
+          class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
+          <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Benefícios exclusivos da
+            parceria</span>
         </div>
         <h2 class="font-display font-bold text-[clamp(1.8rem,5vw,3.8rem)] text-white leading-tight mb-4">
           O caminho mais rápido para<br><span class="text-gradient">conquistar seu diploma</span>
         </h2>
         <p class="text-ink-400 text-[0.97rem] sm:text-[1rem] max-w-2xl mx-auto leading-relaxed">
-          Uma parceria estratégica que reduz custos, simplifica o acesso e coloca você dentro do ensino superior com muito mais facilidade, sem complicação e sem perder qualidade.
+          Uma parceria estratégica que reduz custos, simplifica o acesso e coloca você dentro do ensino superior com
+          muito mais facilidade, sem complicação e sem perder qualidade.
         </p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-10 sm:gap-14 items-center">
         <div class="text-center lg:text-left space-y-5 sm:space-y-6">
           <h3 class="text-white text-xl sm:text-2xl font-semibold">O que isso significa na prática para você</h3>
-          <p class="text-ink-400 leading-relaxed text-sm sm:text-base">Não é só sobre estudar, é sobre conseguir entrar no ensino superior de forma viável, mesmo com rotina corrida e orçamento limitado.</p>
+          <p class="text-ink-400 leading-relaxed text-sm sm:text-base">Não é só sobre estudar, é sobre conseguir entrar
+            no ensino superior de forma viável, mesmo com rotina corrida e orçamento limitado.</p>
           <div class="space-y-3 text-ink-300 text-sm leading-relaxed text-left">
             <p>✔ Pague menos e comece sua graduação/pós sem pesar no bolso</p>
             <p>✔ Tenha um diploma reconhecido e valorizado no mercado</p>
@@ -313,21 +430,32 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          <div class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent"></div>
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
             <div class="flex items-center gap-4 relative w-full">
-              <div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">💰</div>
+              <div
+                class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
+                💰</div>
               <div>
-                <div class="font-semibold text-white text-[0.9rem] leading-snug">Entrada facilitada no ensino superior</div>
+                <div class="font-semibold text-white text-[0.9rem] leading-snug">Entrada facilitada no ensino superior
+                </div>
                 <div class="text-white/50 text-[0.78rem] leading-relaxed mt-1">Comece sem pesar no orçamento</div>
               </div>
             </div>
           </div>
 
-          <div class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent"></div>
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
             <div class="flex items-center gap-4 relative w-full">
-              <div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">🎓</div>
+              <div
+                class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
+                🎓</div>
               <div>
                 <div class="font-semibold text-white text-[0.9rem] leading-snug">Diploma reconhecido e valorizado</div>
                 <div class="text-white/50 text-[0.78rem] leading-relaxed mt-1">Válido em todo o Brasil pelo MEC</div>
@@ -335,10 +463,15 @@
             </div>
           </div>
 
-          <div class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent"></div>
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
             <div class="flex items-center gap-4 relative w-full">
-              <div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">⚡</div>
+              <div
+                class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
+                ⚡</div>
               <div>
                 <div class="font-semibold text-white text-[0.9rem] leading-snug">Processo rápido e sem burocracia</div>
                 <div class="text-white/50 text-[0.78rem] leading-relaxed mt-1">Inscrição 100% online</div>
@@ -346,10 +479,15 @@
             </div>
           </div>
 
-          <div class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent"></div>
+          <div
+            class="group relative bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20 rounded-2xl p-5 sm:p-6 flex items-center overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-white/5 to-transparent">
+            </div>
             <div class="flex items-center gap-4 relative w-full">
-              <div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">📚</div>
+              <div
+                class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
+                📚</div>
               <div>
                 <div class="font-semibold text-white text-[0.9rem] leading-snug">Estudo flexível para sua rotina</div>
                 <div class="text-white/50 text-[0.78rem] leading-relaxed mt-1">EAD ou semipresencial no seu ritmo</div>
@@ -365,53 +503,68 @@
   <section id="modalidades" class="py-16 sm:py-24 bg-ink-900/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="reveal text-center mb-10 sm:mb-14">
-        <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
+        <div
+          class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
           <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Escolha sua jornada</span>
         </div>
-        <h2 class="font-display font-bold text-[clamp(1.8rem,5vw,3.4rem)] text-white leading-tight">Dê o próximo passo na sua carreira!</h2>
+        <h2 class="font-display font-bold text-[clamp(1.8rem,5vw,3.4rem)] text-white leading-tight">Dê o próximo passo
+          na sua carreira!</h2>
       </div>
 
       <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="reveal reveal-d1 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
+        <div
+          class="reveal reveal-d1 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
           onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
           <div class="absolute inset-0">
-            <img src="Whisk_60dd74de2ac276cb13c4914e24ac6817dr.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <img src="Whisk_60dd74de2ac276cb13c4914e24ac6817dr.jpeg" alt=""
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
           </div>
           <div class="relative z-10 p-6 sm:p-8 flex flex-col min-h-[280px] sm:min-h-[360px] justify-end">
             <div class="mb-auto">
-              <span class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">A partir de R$129/mês</span>
+              <span
+                class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">A
+                partir de R$129/mês</span>
             </div>
             <div>
               <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mb-2">Graduação</h3>
-              <p class="text-ink-400 text-sm mb-5 sm:mb-6">Mais de 100 cursos com condições exclusivas para associados.</p>
-              <div class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
+              <p class="text-ink-400 text-sm mb-5 sm:mb-6">Mais de 100 cursos com condições exclusivas para associados.
+              </p>
+              <div
+                class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
                 <span>Garantir desconto</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="reveal reveal-d2 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
+        <div
+          class="reveal reveal-d2 card-lift group relative rounded-3xl overflow-hidden ring-1 ring-white/10 hover:ring-brand-500/40 cursor-pointer"
           onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
           <div class="absolute inset-0">
-            <img src="Whisk_0364561b33dbee5942a4adb4a2fe94afdr.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <img src="Whisk_0364561b33dbee5942a4adb4a2fe94afdr.jpeg" alt=""
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
           </div>
           <div class="relative z-10 p-6 sm:p-8 flex flex-col min-h-[280px] sm:min-h-[360px] justify-end">
             <div class="mb-auto">
-              <span class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Condição Especial</span>
+              <span
+                class="inline-block bg-brand-500 text-white text-[0.7rem] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Condição
+                Especial</span>
             </div>
             <div>
               <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mb-2">Pós-Graduação</h3>
               <p class="text-ink-400 text-sm mb-5 sm:mb-6">Especializações e MBAs com reconhecimento nacional.</p>
-              <div class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
+              <div
+                class="flex items-center gap-2 text-brand-400 text-[0.85rem] font-semibold group-hover:gap-3 transition-all duration-300">
                 <span>Garantir desconto</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </div>
             </div>
@@ -423,17 +576,28 @@
 
   <!-- DEPOIMENTOS -->
   <section id="depoimentos">
-    <div style="font-family:'DM Sans',sans-serif;background:#f15a22;padding:60px 20px;position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px);pointer-events:none;"></div>
-      <div style="position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);pointer-events:none;"></div>
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);"></div>
+    <div
+      style="font-family:'DM Sans',sans-serif;background:#f15a22;padding:60px 20px;position:relative;overflow:hidden;">
+      <div
+        style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.04) 80px);pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);">
+      </div>
 
       <div style="max-width:1000px;margin:0 auto;position:relative;z-index:1;">
         <div style="text-align:center;margin-bottom:40px;">
-          <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:100px;padding:6px 18px;margin-bottom:16px;">
-            <span style="font-size:11px;font-weight:700;color:white;letter-spacing:0.16em;text-transform:uppercase;">Quem já passou por aqui</span>
+          <div
+            style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:100px;padding:6px 18px;margin-bottom:16px;">
+            <span
+              style="font-size:11px;font-weight:700;color:white;letter-spacing:0.16em;text-transform:uppercase;">Quem já
+              passou por aqui</span>
           </div>
-          <h2 class="font-display font-extrabold text-[clamp(1.8rem,5vw,3rem)] text-white leading-tight tracking-normal">
+          <h2
+            class="font-display font-extrabold text-[clamp(1.8rem,5vw,3rem)] text-white leading-tight tracking-normal">
             Histórias de quem<br>transformou a carreira
           </h2>
           <p style="color:rgba(255,255,255,0.7);font-size:0.97rem;margin:12px auto 0;max-width:420px;line-height:1.6;">
@@ -442,23 +606,36 @@
         </div>
 
         <div class="depo-grid-3">
-          <div style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
             <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
-            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Achei que não conseguiria pagar uma faculdade. Com a parceria, a mensalidade ficou dentro do meu orçamento e hoje estou no 3º semestre de Administração."</p>
-            <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
-              <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">MS</div>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Achei que não
+              conseguiria pagar uma faculdade. Com a parceria, a mensalidade ficou dentro do meu orçamento e hoje estou
+              no 3º semestre de Administração."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                MS</div>
               <div>
                 <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Marcos Silva</div>
-                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Administração · São Paulo, SP</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Administração · São Paulo,
+                  SP</div>
               </div>
             </div>
           </div>
 
-          <div style="background:white;border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+          <div
+            style="background:white;border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
             <span style="color:#f15a22;font-size:13px;letter-spacing:2px;">★★★★★</span>
-            <p style="color:#3b3833;font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"O processo foi simples demais. Preenchi o formulário, a equipe me ligou no dia seguinte e em menos de uma semana já estava matriculada na pós."</p>
-            <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(0,0,0,0.07);padding-top:16px;">
-              <div style="width:38px;height:38px;border-radius:50%;background:rgba(241,90,34,0.12);border:1px solid rgba(241,90,34,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#d94410;flex-shrink:0;">AC</div>
+            <p style="color:#3b3833;font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"O processo foi simples demais.
+              Preenchi o formulário, a equipe me ligou no dia seguinte e em menos de uma semana já estava matriculada na
+              pós."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(0,0,0,0.07);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(241,90,34,0.12);border:1px solid rgba(241,90,34,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#d94410;flex-shrink:0;">
+                AC</div>
               <div>
                 <div style="font-size:0.87rem;font-weight:600;color:#1c1a17;line-height:1.2;">Ana Carolina</div>
                 <div style="font-size:0.73rem;color:#776f62;margin-top:2px;">Pós em Gestão de RH · Americana, SP</div>
@@ -466,47 +643,70 @@
             </div>
           </div>
 
-          <div style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
             <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
-            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Já tentei outros programas de bolsa antes e eram cheios de pegadinhas. Aqui foi diferente, o desconto veio de verdade na mensalidade, sem surpresa."</p>
-            <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
-              <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">RF</div>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Já tentei
+              outros programas de bolsa antes e eram cheios de pegadinhas. Aqui foi diferente, o desconto veio de
+              verdade na mensalidade, sem surpresa."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                RF</div>
               <div>
                 <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Ricardo Ferreira</div>
-                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Engenharia de Software · Manaus, AM</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Engenharia de Software ·
+                  Manaus, AM</div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="depo-grid-2">
-          <div style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
             <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
-            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Estudar EAD com a qualidade da Anhanguera e ainda pagar menos por ser associado foi a melhor decisão que tomei este ano."</p>
-            <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
-              <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">JP</div>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Estudar EAD com
+              a qualidade da Anhanguera e ainda pagar menos por ser associado foi a melhor decisão que tomei este ano."
+            </p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                JP</div>
               <div>
                 <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Juliana Pereira</div>
-                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Ciências Contábeis · Maravilha, SC</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Ciências Contábeis ·
+                  Maravilha, SC</div>
               </div>
             </div>
           </div>
 
-          <div style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
+          <div
+            style="background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:18px;">
             <span style="color:white;font-size:13px;letter-spacing:2px;">★★★★★</span>
-            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Trabalho durante o dia e precisava de flexibilidade. O semipresencial me permitiu conciliar tudo. O suporte durante a matrícula foi excelente."</p>
-            <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
-              <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">LO</div>
+            <p style="color:rgba(255,255,255,0.88);font-size:0.87rem;line-height:1.75;margin:0;flex:1;">"Trabalho
+              durante o dia e precisava de flexibilidade. O semipresencial me permitiu conciliar tudo. O suporte durante
+              a matrícula foi excelente."</p>
+            <div
+              style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;">
+              <div
+                style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">
+                LO</div>
               <div>
                 <div style="font-size:0.87rem;font-weight:600;color:white;line-height:1.2;">Lucas Oliveira</div>
-                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Pedagogia Semipresencial · Santa Bárbara d'Oeste, SP</div>
+                <div style="font-size:0.73rem;color:rgba(255,255,255,0.55);margin-top:2px;">Pedagogia Semipresencial ·
+                  Santa Bárbara d'Oeste, SP</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.15),transparent);"></div>
+      <div
+        style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.15),transparent);">
+      </div>
     </div>
   </section>
 
@@ -516,19 +716,22 @@
       <div class="grid lg:grid-cols-[1fr_1.1fr] gap-10 sm:gap-16 items-start">
 
         <div class="reveal lg:sticky lg:top-32 text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6 sm:mb-7">
+          <div
+            class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6 sm:mb-7">
             <span class="text-[0.72rem] font-semibold text-brand-400 uppercase tracking-widest">Cadastro gratuito</span>
           </div>
           <h2 class="font-display font-bold text-[clamp(2rem,5vw,3.8rem)] text-white leading-tight mb-4 sm:mb-5">
             Garanta seu<br><span class="text-gradient">desconto agora!</span>
           </h2>
           <p class="text-ink-400 text-[0.97rem] sm:text-[1rem] leading-relaxed mb-8 sm:mb-12 max-w-md mx-auto lg:mx-0">
-            Preencha o cadastro e nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva para você. Aproveite seu desconto e dê o próximo passo na sua carreira!
+            Preencha o cadastro e nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma
+            proposta exclusiva para você. Aproveite seu desconto e dê o próximo passo na sua carreira!
           </p>
         </div>
 
         <div class="reveal reveal-d1">
-          <div class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40" x-show="!formSent">
+          <div class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40"
+            x-show="!formSent">
             <div class="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 border-b border-white/[0.07]">
               <h3 class="font-display font-bold text-[1.1rem] sm:text-[1.2rem] text-white">Garantir desconto</h3>
               <p class="text-ink-500 text-[0.82rem] mt-1">Todos os campos são obrigatórios. Dados 100% seguros.</p>
@@ -536,23 +739,28 @@
 
             <div class="p-6 sm:p-8 space-y-4 sm:space-y-5">
               <div>
-                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Nome Completo</label>
+                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Nome
+                  Completo</label>
                 <input id="f_nome" type="text" class="inp" placeholder="Seu nome completo">
               </div>
 
               <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">WhatsApp</label>
-                  <input id="f_whats" type="tel" class="inp" placeholder="(11) 99999-9999" maxlength="15" oninput="maskPhone(this)">
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">WhatsApp</label>
+                  <input id="f_whats" type="tel" class="inp" placeholder="(11) 99999-9999" maxlength="15"
+                    oninput="maskPhone(this)">
                 </div>
                 <div>
-                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">E-mail</label>
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">E-mail</label>
                   <input id="f_email" type="email" class="inp" placeholder="seu@email.com">
                 </div>
               </div>
 
               <div>
-                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Concluiu o Ensino Médio?</label>
+                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Concluiu
+                  o Ensino Médio?</label>
                 <select id="f_ensinomedio" class="inp">
                   <option value="">Selecione</option>
                   <option value="sim">Sim</option>
@@ -562,11 +770,13 @@
 
               <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Curso Pretendido</label>
+                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Curso
+                    Pretendido</label>
                   <input id="f_curso" type="text" class="inp" placeholder="Nome do curso">
                 </div>
                 <div>
-                  <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Modalidade</label>
+                  <label
+                    class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">Modalidade</label>
                   <select id="f_modalidade" class="inp">
                     <option value="">Selecione</option>
                     <option value="EAD">EAD</option>
@@ -590,15 +800,16 @@
           </div>
 
           <!-- Sucesso -->
-          <div x-show="formSent"
-            x-transition:enter="transition duration-500"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
+          <div x-show="formSent" x-transition:enter="transition duration-500"
+            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             class="rounded-3xl border border-green-500/20 bg-green-500/5 p-12 sm:p-16 text-center shadow-2xl shadow-black/30">
-            <div class="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6 animate-scale-up">🎉</div>
+            <div
+              class="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6 animate-scale-up">
+              🎉</div>
             <h3 class="font-display font-bold text-2xl text-white mb-3">Cadastro realizado!</h3>
             <p class="text-ink-400 text-[1rem] leading-relaxed max-w-md mx-auto">
-              Nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva para você!
+              Nossa equipe entrará em contato pelo WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva
+              para você!
             </p>
           </div>
         </div>
@@ -611,12 +822,16 @@
   <footer class="border-t border-white/[0.06] py-10 bg-ink-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
-        <img src="anhanguera-logo-branco-horizontal.png" alt="Logo Anhanguera" class="h-6 w-auto object-contain opacity-60" />
+        <img src="anhanguera-logo-branco-horizontal.png" alt="Logo Anhanguera"
+          class="h-6 w-auto object-contain opacity-60" />
         <p class="text-ink-600 text-[0.75rem]">© 2025 Anhanguera. Todos os direitos reservados.</p>
         <div class="flex gap-6">
-          <a href="privacidade_termos.html#privacidade" class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Privacidade</a>
-          <a href="privacidade_termos.html#termos" class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Termos</a>
-          <a href="https://wa.me/message/I6YV7RH5DBKMK1" class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Contato</a>
+          <a href="privacidade_termos.html#privacidade"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Privacidade</a>
+          <a href="privacidade_termos.html#termos"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Termos</a>
+          <a href="https://wa.me/message/I6YV7RH5DBKMK1"
+            class="text-ink-600 hover:text-brand-400 text-[0.75rem] transition-colors">Contato</a>
         </div>
       </div>
     </div>
@@ -657,17 +872,18 @@
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbx_bxvPpxvDeMZ_3ylAJzrre3k8hUBSmE2hSIa-JNSbw1MTM7bWMenfKO8q1CbmvmiSGg/exec";
 
     document.getElementById("btnEnviar").addEventListener("click", async () => {
-      const nome        = document.getElementById("f_nome").value.trim();
-      const whatsapp    = document.getElementById("f_whats").value.trim();
-      const email       = document.getElementById("f_email").value.trim();
+      const nome = document.getElementById("f_nome").value.trim();
+      const whatsapp = document.getElementById("f_whats").value.trim();
+      const email = document.getElementById("f_email").value.trim();
       const ensinoMedio = document.getElementById("f_ensinomedio").value;
-      const curso       = document.getElementById("f_curso").value.trim();
-      const modalidade  = document.getElementById("f_modalidade").value;
+      const curso = document.getElementById("f_curso").value.trim();
+      const modalidade = document.getElementById("f_modalidade").value;
 
       if (!nome || !whatsapp || !email || !ensinoMedio || !curso || !modalidade) {
         alert("Por favor, preencha todos os campos antes de enviar.");
         return;
       }
+
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert("Por favor, informe um e-mail válido.");
         return;
@@ -681,10 +897,18 @@
         await fetch(SHEET_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ nome, whatsapp, email, ensinoMedio, cursoPretendido: curso, modalidade })
+          body: JSON.stringify({
+            nome,
+            whatsapp,
+            email,
+            ensinoMedio,
+            cursoPretendido: curso,
+            modalidade
+          })
         });
+
         document.querySelector('[x-data]').__x.$data.formSent = true;
+
       } catch (error) {
         console.error("Erro ao enviar:", error);
         alert("Erro ao enviar. Tente novamente.");
@@ -711,4 +935,5 @@
   </script>
 
 </body>
+
 </html>
