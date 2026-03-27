@@ -733,7 +733,8 @@
           <div class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40"
             x-show="!formSent">
             <div class="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 border-b border-white/[0.07]">
-              <h3 class="font-display font-bold text-[1.1rem] sm:text-[1.2rem] text-white">Falta pouco! Preencha abaixo</h3>
+              <h3 class="font-display font-bold text-[1.1rem] sm:text-[1.2rem] text-white">Falta pouco! Preencha abaixo
+              </h3>
               <p class="text-ink-500 text-[0.82rem] mt-1">Todos os campos são obrigatórios. Dados 100% seguros.</p>
             </div>
 
@@ -792,7 +793,8 @@
                 </button>
                 <p class="text-center text-ink-600 text-[0.72rem] mt-3 leading-relaxed">
                   Ao enviar você concorda com nossa
-                  <a href="privacidade_termos.html" class="text-ink-400 hover:text-brand-400 transition-colors">Política de Privacidade</a>.
+                  <a href="privacidade_termos.html" class="text-ink-400 hover:text-brand-400 transition-colors">Política
+                    de Privacidade</a>.
                   Dados protegidos e nunca compartilhados.
                 </p>
               </div>
@@ -893,45 +895,39 @@
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
-      try {
-        await fetch(SHEET_URL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify({
-            nome,
-            whatsapp,
-            email,
-            ensinoMedio,
-            cursoPretendido: curso,
-            modalidade
-          })
-        });
+      await fetch(SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          nome,
+          whatsapp,
+          email,
+          ensinoMedio,
+          cursoPretendido: curso,
+          modalidade
+        })
+      });
 
+      // pequena espera pra UX
+      setTimeout(() => {
         document.querySelector('[x-data]').__x.$data.formSent = true;
-
-      } catch (error) {
-        console.error("Erro ao enviar:", error);
-        alert("Erro ao enviar. Tente novamente.");
-        btn.disabled = false;
-        btn.textContent = "Garantir desconto";
-      }
-    });
+      }, 800);
   </script>
 
   <script>
-    function app() {
-      return {
-        scrolled: false,
-        formSent: false,
-        init() {
-          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
-          const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
-          }, { threshold: 0.12 });
-          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      function app() {
+        return {
+          scrolled: false,
+          formSent: false,
+          init() {
+            window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
+            const observer = new IntersectionObserver(entries => {
+              entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+            }, { threshold: 0.12 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+          }
         }
       }
-    }
   </script>
 
 </body>
