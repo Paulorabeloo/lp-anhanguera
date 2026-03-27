@@ -946,39 +946,31 @@
       setTimeout(() => {
         btn.textContent = "Sucesso!";
 
-        document.getElementById("formBox").classList.add("hidden");
-        const success = document.getElementById("successBox");
+        // 🔥 some TUDO (texto + form)
+        document.getElementById("formWrapper").classList.add("hidden");
 
+        // 🔥 mostra sucesso
+        const success = document.getElementById("successBox");
         success.classList.remove("hidden");
 
-        setTimeout(() => {
-          btn.textContent = "Sucesso!";
-
-          // 🔥 some TUDO (texto + form)
-          document.getElementById("formWrapper").classList.add("hidden");
-
-          // 🔥 mostra sucesso
-          const success = document.getElementById("successBox");
-          success.classList.remove("hidden");
-
-        }, 800);
-      });
+      }, 800);
+    });
   </script>
 
   <script>
-      function app() {
-        return {
-          scrolled: false,
-          formSent: false,
-          init() {
-            window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
-            const observer = new IntersectionObserver(entries => {
-              entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
-            }, { threshold: 0.12 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-          }
+    function app() {
+      return {
+        scrolled: false,
+        formSent: false,
+        init() {
+          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
       }
+    }
   </script>
 
 </body>
