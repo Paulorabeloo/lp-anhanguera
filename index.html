@@ -896,9 +896,11 @@
       btn.textContent = "Enviando...";
 
       try {
-        await fetch(SHEET_URL, {
+        const res = await fetch(SHEET_URL, {
           method: "POST",
-          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({
             nome,
             whatsapp,
@@ -909,15 +911,17 @@
           })
         });
 
-        // sempre mostra sucesso
-        document.querySelector('[x-data]').__x.$data.formSent = true;
+        const data = await res.json();
+
+        if (data.status === "success") {
+          document.querySelector('[x-data]').__x.$data.formSent = true;
+        } else {
+          throw new Error("Sucesso!");
+        }
 
       } catch (error) {
-        console.error("Erro ao enviar:", error);
-
-        // opcional: pode até remover o alert pra não assustar usuário
-        alert("Erro ao enviar. Tente novamente.");
-
+        console.error("Erro real:", error);
+        alert("Erro ao enviar. Verifique sua conexão e tente novamente.");
         btn.disabled = false;
         btn.textContent = "Garantir desconto";
       }
