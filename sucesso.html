@@ -1,0 +1,14 @@
+setTimeout(() => {
+  btn.textContent = "Sucesso!";
+
+  // esconde só o formulário
+  document.getElementById("formBox").classList.add("hidden");
+
+  // mostra sucesso
+  const success = document.getElementById("successBox");
+  success.classList.remove("hidden");
+
+  // 🔥 scroll automático pra ele aparecer
+  success.scrollIntoView({ behavior: "smooth", block: "center" });
+
+}, 800);

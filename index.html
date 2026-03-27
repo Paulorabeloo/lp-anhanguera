@@ -926,36 +926,24 @@
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
-      try {
-        await fetch(SHEET_URL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify({
-            nome,
-            whatsapp,
-            email,
-            ensinoMedio,
-            cursoPretendido: curso,
-            modalidade
-          })
-        });
-      } catch (e) {
-        console.log("erro ignorado (no-cors)");
-      }
+      await fetch(SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          nome,
+          whatsapp,
+          email,
+          ensinoMedio,
+          cursoPretendido: curso,
+          modalidade
+        })
+      });
+
+      // feedback + redirect
+      btn.textContent = "Redirecionando...";
 
       setTimeout(() => {
-        btn.textContent = "Sucesso!";
-
-        // esconde só o formulário
-        document.getElementById("formBox").classList.add("hidden");
-
-        // mostra sucesso
-        const success = document.getElementById("successBox");
-        success.classList.remove("hidden");
-
-        // 🔥 scroll automático pra ele aparecer
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
-
+        window.location.href = "sucesso.html";
       }, 800);
     });
   </script>
