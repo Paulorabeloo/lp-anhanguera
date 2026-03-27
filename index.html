@@ -926,7 +926,8 @@
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
-      await fetch(SHEET_URL, {
+      // dispara envio (não espera)
+      fetch(SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify({
@@ -939,12 +940,8 @@
         })
       });
 
-      // feedback + redirect
-      btn.textContent = "Redirecionando...";
-
-      setTimeout(() => {
-        window.location.href = "sucesso.html";
-      }, 800);
+      // 🔥 REDIRECIONA SEM DEPENDER DO FETCH
+      window.location.href = "sucesso.html";
     });
   </script>
 
