@@ -908,26 +908,27 @@
         })
       });
 
-      // pequena espera pra UX
+      // pequena espera pra UX (mais profissional)
       setTimeout(() => {
         document.querySelector('[x-data]').__x.$data.formSent = true;
       }, 800);
+    });
   </script>
 
   <script>
-      function app() {
-        return {
-          scrolled: false,
-          formSent: false,
-          init() {
-            window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
-            const observer = new IntersectionObserver(entries => {
-              entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
-            }, { threshold: 0.12 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-          }
+    function app() {
+      return {
+        scrolled: false,
+        formSent: false,
+        init() {
+          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
       }
+    }
   </script>
 
 </body>
