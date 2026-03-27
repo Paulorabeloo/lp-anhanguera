@@ -730,8 +730,8 @@
         </div>
 
         <div class="reveal reveal-d1">
-          <div class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40"
-            x-show="!formSent">
+          <div id="formBox"
+            class="rounded-3xl border border-white/[0.09] bg-ink-900/50 overflow-hidden shadow-2xl shadow-black/40">
             <div class="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 border-b border-white/[0.07]">
               <h3 class="font-display font-bold text-[1.1rem] sm:text-[1.2rem] text-white">Falta pouco! Preencha abaixo
               </h3>
@@ -802,7 +802,7 @@
           </div>
 
           <!-- Sucesso -->
-          <div x-show="formSent" x-transition:enter="transition duration-500"
+          <div id="successBox" class="hidden" x-transition:enter="transition duration-500"
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             class="rounded-3xl border border-green-500/20 bg-green-500/5 p-12 sm:p-16 text-center shadow-2xl shadow-black/30">
             <div
@@ -854,21 +854,42 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const counters = document.querySelectorAll(".counter");
+
       const animate = (el) => {
         const target = +el.dataset.target;
         let current = 0;
         const steps = 1200 / 16;
         const increment = target / steps;
+
         const timer = setInterval(() => {
           current += increment;
-          if (current >= target) { el.innerText = target.toLocaleString("pt-BR"); clearInterval(timer); }
-          else { el.innerText = Math.floor(current).toLocaleString("pt-BR"); }
+          if (current >= target) {
+            el.innerText = target.toLocaleString("pt-BR");
+            clearInterval(timer);
+          } else {
+            el.innerText = Math.floor(current).toLocaleString("pt-BR");
+          }
         }, 16);
       };
+
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { animate(e.target); obs.unobserve(e.target); } });
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animate(e.target);
+            obs.unobserve(e.target);
+          }
+        });
       }, { threshold: 0.6 });
-      counters.forEach(el => obs.observe(el));
+
+      counters.forEach(el => {
+        obs.observe(el);
+
+        // 🔥 anima se já estiver visível
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          animate(el);
+        }
+      });
     });
 
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbx_bxvPpxvDeMZ_3ylAJzrre3k8hUBSmE2hSIa-JNSbw1MTM7bWMenfKO8q1CbmvmiSGg/exec";
@@ -912,28 +933,30 @@
         console.log("erro ignorado (no-cors)");
       }
 
-      // 👉 SEMPRE executa (independente de erro ou não)
+      // 🔥 sempre executa (independente de erro)
       setTimeout(() => {
         btn.textContent = "Enviado!";
 
-        document.querySelector('[x-data]').__x.$data.formSent = true;
+        document.getElementById("formBox").classList.add("hidden");
+        document.getElementById("successBox").classList.remove("hidden");
       }, 800);
+    });
   </script>
 
   <script>
-      function app() {
-        return {
-          scrolled: false,
-          formSent: false,
-          init() {
-            window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
-            const observer = new IntersectionObserver(entries => {
-              entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
-            }, { threshold: 0.12 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-          }
+    function app() {
+      return {
+        scrolled: false,
+        formSent: false,
+        init() {
+          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 40; });
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
       }
+    }
   </script>
 
 </body>
