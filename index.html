@@ -802,7 +802,7 @@
           </div>
 
           <!-- Sucesso -->
-          <div id="successBox" class="hidden col-span-1 lg:col-span-2 flex items-center justify-center">
+          <div id="successBox" class="hidden col-span-1 lg:col-span-2 items-center justify-center">
 
             <div
               class="w-full max-w-xl mx-auto rounded-3xl border border-green-500/20 bg-green-500/5 p-12 sm:p-16 text-center shadow-2xl shadow-black/30 transition-all duration-500 opacity-0 scale-95">
@@ -942,12 +942,13 @@
       }
 
       setTimeout(() => {
-        btn.textContent = "Enviado!";
+        btn.textContent = "Sucesso!";
 
         document.getElementById("formBox").classList.add("hidden");
         const success = document.getElementById("successBox");
 
         success.classList.remove("hidden");
+        success.classList.add("flex");
 
         setTimeout(() => {
           success.classList.remove("opacity-0", "scale-95");
