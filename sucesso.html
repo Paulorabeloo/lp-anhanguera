@@ -1,14 +1,31 @@
-setTimeout(() => {
-  btn.textContent = "Sucesso!";
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sucesso!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-  // esconde só o formulário
-  document.getElementById("formBox").classList.add("hidden");
+<body class="bg-black flex items-center justify-center min-h-screen text-white">
 
-  // mostra sucesso
-  const success = document.getElementById("successBox");
-  success.classList.remove("hidden");
+  <div class="text-center max-w-xl px-6">
 
-  // 🔥 scroll automático pra ele aparecer
-  success.scrollIntoView({ behavior: "smooth", block: "center" });
+    <div class="text-6xl mb-6">🎉</div>
 
-}, 800);
+    <h1 class="text-3xl font-bold mb-4">
+      Cadastro realizado com sucesso!
+    </h1>
+
+    <p class="text-gray-400 mb-8">
+      Nossa equipe vai te chamar no WhatsApp em até <strong>24 horas</strong> com uma proposta exclusiva.
+    </p>
+
+    <a href="index.html" 
+       class="inline-block bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold transition">
+       Voltar para o início
+    </a>
+
+  </div>
+
+</body>
+</html>
