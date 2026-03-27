@@ -895,23 +895,29 @@
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
-      await fetch(SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          nome,
-          whatsapp,
-          email,
-          ensinoMedio,
-          cursoPretendido: curso,
-          modalidade
-        })
-      });
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify({
+            nome,
+            whatsapp,
+            email,
+            ensinoMedio,
+            cursoPretendido: curso,
+            modalidade
+          })
+        });
+      } catch (e) {
+        console.log("erro ignorado (no-cors)");
+      }
+
+      // 👉 SEMPRE executa (independente de erro ou não)
       setTimeout(() => {
-        document.querySelector('#formulario form')?.classList.add('hidden');
-        document.querySelector('#formulario .sucesso')?.classList.remove('hidden');
+        btn.textContent = "Enviado!";
+
+        document.querySelector('[x-data]').__x.$data.formSent = true;
       }, 800);
-    });
   </script>
 
   <script>
