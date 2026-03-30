@@ -785,6 +785,17 @@
                 </div>
               </div>
 
+              <div>
+                <label class="block text-[0.72rem] font-semibold text-ink-400 uppercase tracking-wider mb-1.5">
+                  Empresa Parceira
+                </label>
+                <select id="f_empresa" class="inp">
+                  <option value="">Selecione</option>
+                  <option value="AABB - Maravilha">AABB - Maravilha</option>
+                  <option value="PoupSaúde">PoupSaúde</option>
+                </select>
+              </div>
+
               <div class="pt-2">
                 <button id="btnEnviar" type="button"
                   class="btn-shine w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:-translate-y-0.5 text-[0.95rem]">
@@ -797,6 +808,8 @@
                   Dados protegidos e nunca compartilhados.
                 </p>
               </div>
+
+
             </div>
           </div>
 
@@ -894,7 +907,6 @@
       counters.forEach(el => {
         obs.observe(el);
 
-        // 🔥 anima se já estiver visível
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight) {
           animate(el);
@@ -926,7 +938,6 @@
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
-      // dispara envio (não espera)
       fetch(SHEET_URL, {
         method: "POST",
         mode: "no-cors",
@@ -940,7 +951,6 @@
         })
       });
 
-      // 🔥 REDIRECIONA SEM DEPENDER DO FETCH
       window.location.href = "sucesso.html";
     });
   </script>
