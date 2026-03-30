@@ -914,7 +914,7 @@
       });
     });
 
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbx_bxvPpxvDeMZ_3ylAJzrre3k8hUBSmE2hSIa-JNSbw1MTM7bWMenfKO8q1CbmvmiSGg/exec";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbwus72XQf2ElmlVJb91Ta1oqWXltL3Jo84qlNU_9GSJnA4bDWyvJwNRZTjkudunvkGGog/exec";
 
     document.getElementById("btnEnviar").addEventListener("click", async () => {
       const nome = document.getElementById("f_nome").value.trim();
@@ -923,6 +923,7 @@
       const ensinoMedio = document.getElementById("f_ensinomedio").value;
       const curso = document.getElementById("f_curso").value.trim();
       const modalidade = document.getElementById("f_modalidade").value;
+      const empresa= document.getElementById("f_empresa").value.trim();
 
       if (!nome || !whatsapp || !email || !ensinoMedio || !curso || !modalidade) {
         alert("Por favor, preencha todos os campos antes de enviar.");
