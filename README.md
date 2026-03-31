@@ -1,5 +1,7 @@
 <img width="963" height="2927" alt="LP" src="https://github.com/user-attachments/assets/35d69dc8-b256-4922-b59c-95de5a742208" />
 
+https://github.com/user-attachments/assets/1a5ff48d-fbff-4ad4-99ef-8785c2411c14
+
 # 🎓 Anhanguera — Landing Page de Captação
 
 Landing page de alta conversão para parceiros da Anhanguera, com foco em captação de leads para Graduação e Pós-Graduação com condições exclusivas.
