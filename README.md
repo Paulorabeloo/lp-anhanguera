@@ -1,91 +1,105 @@
-<img width="963" height="2927" alt="LP" src="https://github.com/user-attachments/assets/35d69dc8-b256-4922-b59c-95de5a742208" />
+# Lead Capture Landing Page — Anhanguera
 
-https://github.com/user-attachments/assets/1a5ff48d-fbff-4ad4-99ef-8785c2411c14
+Single-page lead capture site built for a partnership campaign. A visitor picks
+their partner organization, submits the form, and the lead lands directly in a
+Google Sheet the marketing team already works in — no CRM, no backend, no new
+tool for anyone to learn.
 
-# 🎓 Anhanguera — Landing Page de Captação
+## The problem it solves
 
-Landing page de alta conversão para parceiros da Anhanguera, com foco em captação de leads para Graduação e Pós-Graduação com condições exclusivas.
+The team needed to collect partnership leads and act on them the same day. A
+full CRM integration would have taken weeks and forced a new workflow on people
+who live in spreadsheets. Google Sheets as the storage layer removed that
+friction entirely.
 
----
-
-## 📁 Estrutura do Projeto
+## How it works
 
 ```
-/
-├── index.html                # Página principal (landing page)
-├── sucesso.html              # Página de confirmação pós-cadastro
-├── privacidade_termos.html   # Política de Privacidade e Termos de Uso
-├── input.css                 # Entrada para compilação do Tailwind CSS
-├── tailwind.config.js        # Configuração customizada do Tailwind
-├── anhanguera-logo-branco-horizontal.png
-├── fotoIA.png                # Foto hero da seção principal
-├── Whisk_60dd74de2ac276cb13c4914e24ac6817dr.jpeg  # Imagem card Graduação
-└── Whisk_0364561b33dbee5942a4adb4a2fe94afdr.jpeg  # Imagem card Pós-Graduação
+Form  →  fetch POST (with sendBeacon fallback)  →  Google Apps Script  →  Google Sheet
 ```
 
----
+The `sendBeacon` fallback matters: it keeps the submission alive when the
+browser is already tearing the page down, which is exactly when mobile users
+close the tab right after tapping submit.
 
-## 🚀 Tecnologias
+## Stack
 
-- **HTML5** — estrutura semântica
-- **Tailwind CSS** (via CDN) — estilização utilitária com tema customizado
-- **Alpine.js** — reatividade leve (navbar com scroll, reveal de elementos)
-- **Google Fonts** — Plus Jakarta Sans + DM Sans
-- **Google Apps Script** — backend para salvar leads em planilha
+- **HTML** + **Tailwind CSS** (compiled from `input.css`)
+- **Vanilla JavaScript** — no framework, no build step beyond Tailwind
+- **Google Apps Script** as a serverless write endpoint
+- **Google Sheets** as the datastore
 
----
+## Structure
 
-## ✨ Seções da Landing Page
+| File | Purpose |
+| --- | --- |
+| `index.html` | Landing page and form |
+| `sucesso.html` | Post-submission confirmation |
+| `privacidade_termos.html` | Privacy policy and terms |
+| `tailwind.config.js` | Design tokens and brand colors |
 
-| Seção | Descrição |
-|---|---|
-| **Nav** | Fixo com scroll, CTA responsivo |
-| **Hero** | Headline principal, foto flutuante, contadores animados |
-| **Benefícios** | Cards com diferenciais da parceria |
-| **Modalidades** | Cards visuais para Graduação e Pós-Graduação |
-| **Depoimentos** | 5 depoimentos de alunos reais |
-| **Formulário** | Captura de lead com envio para Google Sheets |
-| **Footer** | Links de privacidade, termos e contato |
+## Configuration
 
----
-
-## 📋 Campos do Formulário
-
-- Nome Completo
-- WhatsApp (com máscara automática)
-- E-mail
-- Concluiu o Ensino Médio?
-- Curso Pretendido
-- Modalidade (EAD ou Semipresencial)
-- Empresa Parceira (AABB - Maravilha / PoupSaúde)
-
----
-
-## ⚙️ Configuração do Backend
-
-Os dados do formulário são enviados via `fetch` para um **Google Apps Script** (Apps Script Web App).
-
-Para configurar:
-1. Crie uma planilha no Google Sheets
-2. Vá em **Extensões → Apps Script** e publique um Web App que receba `POST`
-3. Substitua a URL no `index.html`:
+The Apps Script endpoint is set in `index.html`:
 
 ```js
-const SHEET_URL = "https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+const SHEET_URL = "<your Apps Script /exec deployment URL>";
 ```
 
----
-
-## 🎨 Tema de Cores
-
-| Token | Cor | Uso |
-|---|---|---|
-| `brand-500` | `#f15a22` | Laranja principal (CTAs, destaques) |
-| `ink-950` | `#0d0c0a` | Fundo escuro |
-| `ink-400` | `#938e82` | Texto secundário |
+Deploy the Apps Script with access set to **Anyone**, then paste the resulting
+`/exec` URL. Rotate the deployment if the URL is ever exposed somewhere it
+should not be.
 
 ---
 
-## 📄 Licença
+# Landing Page de Captação de Leads — Anhanguera
 
-Projeto proprietário — uso restrito à parceria Anhanguera.
+Site de página única para captação de leads, feito para uma campanha de
+parceria. O visitante escolhe a organização parceira, envia o formulário e o
+lead cai direto em uma planilha do Google que o time de marketing já usa — sem
+CRM, sem backend, sem ferramenta nova para ninguém aprender.
+
+## O problema que resolve
+
+O time precisava captar leads de parceria e agir sobre eles no mesmo dia. Uma
+integração completa de CRM levaria semanas e imporia um fluxo novo a pessoas que
+trabalham dentro de planilhas. Usar o Google Sheets como camada de dados
+eliminou esse atrito por completo.
+
+## Como funciona
+
+```
+Formulário  →  fetch POST (com fallback em sendBeacon)  →  Google Apps Script  →  Google Sheets
+```
+
+O fallback com `sendBeacon` não é detalhe: ele mantém o envio vivo quando o
+navegador já está descarregando a página, que é exatamente o que acontece quando
+o usuário de celular fecha a aba logo depois de tocar em enviar.
+
+## Stack
+
+- **HTML** + **Tailwind CSS** (compilado a partir do `input.css`)
+- **JavaScript puro** — sem framework e sem build além do Tailwind
+- **Google Apps Script** como endpoint serverless de escrita
+- **Google Sheets** como armazenamento
+
+## Estrutura
+
+| Arquivo | Para que serve |
+| --- | --- |
+| `index.html` | Landing page e formulário |
+| `sucesso.html` | Confirmação pós-envio |
+| `privacidade_termos.html` | Política de privacidade e termos |
+| `tailwind.config.js` | Tokens de design e cores da marca |
+
+## Configuração
+
+O endpoint do Apps Script fica definido no `index.html`:
+
+```js
+const SHEET_URL = "<URL /exec do seu deployment do Apps Script>";
+```
+
+Publique o Apps Script com acesso definido como **Qualquer pessoa** e cole a URL
+`/exec` resultante. Rotacione o deployment caso a URL seja exposta em algum
+lugar indevido.
