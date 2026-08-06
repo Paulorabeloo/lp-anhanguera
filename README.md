@@ -1,3 +1,5 @@
+<img width="963" height="2927" alt="LP" src="https://github.com/user-attachments/assets/766209e2-6551-4e6e-ac97-6e479c729196" />
+
 # Lead Capture Landing Page (Anhanguera)
 
 Single-page lead capture site built for a partnership campaign. A visitor picks
